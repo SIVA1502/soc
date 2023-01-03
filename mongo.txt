@@ -1,0 +1,66 @@
+mongo db CRUD operations
+
+Create:
+//creating collections
+db.createCollection('posts')
+
+//inserting a row
+db.posts.insert({
+  title: 'Post One',
+  body: 'Body of post one',
+  id: 10,
+  category: 'News',
+  tags: ['news', 'events'],
+  user: {
+    name: 'John Doe',
+    status: 'author'
+  },
+  date: Date()
+})
+
+//inserting many rows
+db.posts.insertMany([
+  {
+    title: 'Post Two',
+    body: 'Body of post two',
+    category: 'Technology',
+    id: 20,
+    date: Date()
+  },
+  {
+    title: 'Post Three',
+    body: 'Body of post three',
+    id: 30,
+    category: 'News',
+    date: Date()
+  },
+  {
+    title: 'Post Four',
+    body: 'Body of post three',
+    id: 40,
+    category: 'Entertainment',
+    date: Date()
+  }
+])
+
+Read:
+
+db.posts.countDocuments({category: 'News'}) // alias for an aggregation pipeline - accurate count
+
+// Comparison
+db.posts.find({"id": {$gt: 20}})
+
+//Logical
+db.posts.find({title:{$not: {$eq: "Post Four"}}})
+
+Update:
+
+db.posts.update({"id": 1}, {"title":'post'})//updates the entire document
+
+db.posts.update({"id": 40}, {$set: {"title":'post'}})// updates where id=40
+
+Delete:
+
+db.posts.remove({})//deletes the entire document
+
+db.coll.remove({id=10})//deletes where id=10
